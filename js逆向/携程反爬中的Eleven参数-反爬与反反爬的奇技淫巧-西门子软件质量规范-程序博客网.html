@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<!-- saved from url=(0041)https://www.csdndocs.com/article/11590261 -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="applicable-device" content="pc,mobile">   
+    <meta http-equiv="Cache-Control" content="no-transform">
+   	<title>携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网</title>
+   	<meta name="keywords" content="携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧">    <meta name="Description" content="携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧">    <!-- Bootstrap -->
+    <link rel="stylesheet" href="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/index.css">
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/push.js.下载"></script><script src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/hm.js.下载"></script><script src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/jquery.min.js.下载"></script>
+    <script src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/bootstrap.min.js.下载"></script>
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?52dabd79d8a8139c52a3d30345b8c480";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+  </head>
+  <body>  
+  <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">程序博客网</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand hidden-sm" href="https://www.csdndocs.com/" title="程序博客网">程序博客网</a>
+        </div>
+        <div class="navbar-collapse collapse" role="navigation">
+          <ul class="nav navbar-nav">   
+          <li><a href="https://www.csdndocs.com/" title="热点推荐">热点推荐</a></li>
+          <li><a href="https://www.csdndocs.com/" title="推荐博客">推荐博客</a></li>
+          <li><a href="https://www.csdndocs.com/" title="编程语言">编程语言</a></li>
+          <li><a href="https://www.csdndocs.com/" title="数据库">数据库</a></li>
+          <li><a href="https://www.csdndocs.com/" title="前端">前端</a></li>
+          </ul>          
+        </div>
+      </div>
+    </div>  
+<div class="container site-header">
+  	<div class="row">
+    	<div class="col-xs-12">
+        <form class="search" action="https://www.csdndocs.com/search" role="search" method="get">
+        	<div class="form-group"><input name="wd" id="wd" type="text" class="form-control search clearable" placeholder="机器学习TensorFlow入门"><span id="search" class="fa fa-search glyphicon glyphicon-search" aria-hidden="true"></span></div>
+            <input type="hidden" name="page" id="page" value="1">
+        </form>
+        <script>
+            $(function () {
+                $("#search").bind("click", function () {
+                    window.location.href = "/search?wd="+$('#wd').val()+"&page=1";
+                })
+            })
+        </script>
+        </div>
+    </div>
+  </div>
+<div class="container"><div class="row">
+<div class="col-md-12"><p><a href="https://www.csdndocs.com/">程序博客网</a> &gt; <a href="https://www.csdndocs.com/blog/643904">西门子软件质量规范</a></p></div>
+<div class="col-md-9  main-box article-content">
+	<h1>携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧</h1>
+		<blockquote class="row">来源：互联网  发布：<a href="https://www.csdndocs.com/blog/643904">西门子软件质量规范</a>   编辑：程序博客网   时间：2023/04/11 09:04</blockquote>
+		<div>			
+			<p>http://www.shenjianshou.cn/blog/?p=302</p><p><br></p><p><br></p><p></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">今天我们要聊点什么呢，之前说要聊去哪儿的，不过暂且咱们再放一放，先聊一聊去哪儿的干爹携程吧，上次我记得看了携程工程师霸气回应说懂爬虫的来去哪儿，懂反爬的来携程。我觉得特别棒，这种开放的心态和自信，正是一个开放的互联网环境所需要的。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">所以今天这节课虽然咱们以携程为例，但是我们还是以学习的目的为主，因此我不会把完整的代码放出来，大家掌握思路，拿到渔网比直接copy代码有用的多。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">上篇文章用邮箱加密给大家演示了爬虫中简单的JS对抗，今天这节课咱们就用携程的Eleven参数来演示下复杂的JS对抗。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">对了，这个题图，主要是因为携程给他们这个反爬的JS起了一个名字叫oceanball-海洋球，不明觉厉啊。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">好了，言归正传。做过携程酒店爬虫的朋友，估计都研究过这个eleven参数，这个参数到底是哪里的呢，我们先看下页面请求：</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828105921_93254.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">就是这样一个页面，打开一个酒店页面会发现实际的酒店房型列表是一个ajax请求，如下：</p><div class="highlight" style="color:rgb(51,51,51); font-size:16px"><pre style="font-size:13px; font-family:Menlo,Monaco,Consolas,&quot;Courier New&quot;,monospace; border:1px solid rgb(204,204,204); line-height:1.42857; margin-top:0px; margin-bottom:10px; max-width:100%; overflow:auto; padding:9.5px; white-space:pre-wrap; word-wrap:break-word; word-break:break-all; background-color:rgb(245,245,245)"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important"></span>http://hotels.ctrip.com/Domestic/tool/AjaxHote1RoomListForDetai1.aspx?psid=&amp;MasterHotelID=441351&amp;hotel=441351&amp;EDM=F&amp;roomId=&amp;IncludeRoom=&amp;city=2&amp;showspothotel=T&amp;supplier=&amp;IsDecoupleSpotHotelAndGroup=F&amp;contrast=0&amp;brand=0&amp;startDate=2017-08-28&amp;depDate=2017-08-29&amp;IsFlash=F&amp;RequestTravelMoney=F&amp;hsids=&amp;IsJustConfirm=&amp;contyped=0&amp;priceInfo=-1&amp;equip=&amp;filter=&amp;productcode=&amp;couponList=&amp;abForHuaZhu=&amp;defaultLoad=T&amp;TmFromList=F&amp;eleven=c4350e460862b69d9d76724e1325a0a54ef23c2e0648636c855a329418018a85&amp;callback=CASuBCgrghIfIUqemNE&amp;_=1503884369495</pre></div><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">前面咱说过，出于对反爬工程师工作的尊重，我们今天的文章不去完整介绍整个携程爬虫的做法，其实除了这eleven参数，携程还是在代码了下了不少毒的。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span id="more-302" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important"></span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">一般来说，一个ajax请求，如果没有做cookie限制的话，最难的问题就是能把所有的参数拼接完整，这个请求中最难的就是这个eleven参数的获取，那咱们遇到这种问题，应该具体如何处理，同时对于反爬工作来说，又有什么可以借鉴的地方呢。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">一、反反爬中遇到复杂JS请求的处理流程</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">凡是题目总有一个解题思路，反反爬也不例外，解题思路很重要。不然就像没头苍蝇一样到处乱撞，今天这篇文章最重要的就是说说这个解题思路。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">1.查看发起这个请求的JS来源</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">首先，Ajax请求大多都是由JS发起的（今天我们不讨论flash或者其他情况，不常见），我们使用Chrome工具，将鼠标移动到这个请求的Initiator这一栏上，就可以看到完整的调用栈，非常清晰。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"></p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828105939_77008.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">2.确认核心JS文件</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">可以看到调用栈中有非常多的JS，那具体我们要分析哪个呢？一般来说我们可以首先排除掉VM开头的和常见库如jQuery这类，当然也不绝对，有些JS也会把自己注册到VM中去，这个另说，携程这里的情况挺明显，一眼就看到了那个不寻常的oceanball，看着就不是一般人，就他了。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">3.分析JS文件</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">点击这个oceanball咱们就可以看到完整了源码了，下面也是最难的一步，分析JS文件。上一篇文章已经简单说了一些，首先，可读性非常重要，咱们复制完整的JS，贴进Snippet中，咱们大概看下，文件太大，没办法贴到文章中来：</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">一看就是在代码里面下毒，携程反爬工程师不简单啊。</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828110156_61923.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">不过呢，咱们看到这种很多数字的其实不要害怕，特别是在看到eval函数和String.fromCharCode，因为这就是把代码加密了一下，这种加密就跟没加密一样，咱们把eval函数直接换成console.log函数，运行一下这个Snippet。在控制台就可以看到原始代码。解密后如下：</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828110422_63467.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">看来这个是毒中毒啊，解密后的代码虽然比刚刚的可读性大为增加，但是依然可读性不强，不过根据经验，这样的文件已经没有一个特别简单的方案可以一举解密，只能逐行分析加部分替换了。当然直接Debug也是一个最省力的方案。</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828110433_82913.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">通过Debug调试，我们可以看到很多变量的中间值，这中间最重要的莫过于这最后一行，我们可以看到Eleven参数这个时候已经算出来了，而向CASttwHNetheyMWqSJ这个函数中传入一串实现，而这个实现正式返回eleven的值（这段代码是要把人绕死的节奏吗），所以我们只需要构造一个假的CASttwHNetheyMWqSJ来接收这段实现即可，而CASttwHNetheyMWqSJ这个函数名也是通过url传入的，好了，基本上大体的分析搞定了，下面就是构造这个代码的运行环境了。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">4.构造运行环境</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">重要的话要重复很多遍：写爬虫最好的语言就是JS，因为JS对抗是爬虫中最难的部分，而一个合适的JS环境则可以事半功倍。全球最好的JS爬虫框架-在线网络爬虫/大数据分析/机器学习开发平台-神箭手云<span class="icon-external" style="font-family:icomoon!important; font-size:24px; line-height:1"></span>。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">有了JS运行环境，我们其实只需要构造一个函数接受Eleven参数，请求oceanball，并直接运行他就可以了。我们看下我们构造的CASttwHNetheyMWqSJ函数：</p><div class="highlight" style="color:rgb(51,51,51); font-size:16px"><pre style="font-size:13px; font-family:Menlo,Monaco,Consolas,&quot;Courier New&quot;,monospace; border:1px solid rgb(204,204,204); line-height:1.42857; margin-top:0px; margin-bottom:10px; max-width:100%; overflow:auto; padding:9.5px; white-space:pre-wrap; word-wrap:break-word; word-break:break-all; background-color:rgb(245,245,245)"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important"></span><span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">callbackFunc</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">randomCallback</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">(</span><span class="mi" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,153,153)">15</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">);</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">getEleven</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">;</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">eval</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">(</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"var "</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">+</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">callbackFunc</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">+</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">" = function(a){getEleven = a}"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">);</span> </pre></div><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">这里对于初学者可能还是有点绕，简单说明下，首先我们随机了一个函数名，然后我们定义了一个空函数来接受oceanball中的返回eleven参数的函数实现，然后我把这个函数名定义为接受new Function的实现，这样我们后面就可以用getEleven来直接获取eleven参数了。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">这里还得说下普通JS环境的缺陷，由于在普通JS环境中（非浏览器中）缺少一些重要的内置变量，如window，document等等，导致很多JS是运行不了的，这里我们补上这些变量：</p><div class="highlight" style="color:rgb(51,51,51); font-size:16px"><pre style="font-size:13px; font-family:Menlo,Monaco,Consolas,&quot;Courier New&quot;,monospace; border:1px solid rgb(204,204,204); line-height:1.42857; margin-top:0px; margin-bottom:10px; max-width:100%; overflow:auto; padding:9.5px; white-space:pre-wrap; word-wrap:break-word; word-break:break-all; background-color:rgb(245,245,245)"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important"></span><span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">Image</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">function</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">(){};</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">{};</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">document</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">{};</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">document</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">document</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">;</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">navigator</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">{</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"appCodeName"</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">:</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"Mozilla"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">,</span> <span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"appName"</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">:</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"Netscape"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">,</span> <span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"language"</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">:</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"zh-CN"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">,</span> <span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"platform"</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">:</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"Win"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">};</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">navigator</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">userAgent</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">site</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">getUserAgent</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">();</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">navigator</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">navigator</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">;</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">location</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">{};</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">location</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">href</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">"http://hotels.ctrip.com/hotel/"</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">+</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">hotel_id</span><span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">+</span><span class="s2" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(221,51,34)">".html"</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">;</span> <span class="kd" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">var</span> <span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">location</span> <span class="o" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:bold">=</span> <span class="nb" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; color:rgb(0,128,128)">window</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">.</span><span class="nx" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">location</span><span class="p" style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important">;</span> </pre></div><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">JS如果比较熟悉的话，应该能看出来这里有一个变量不常规，就是第一行的Image变量。这又是携程下的毒啊，我们回到刚刚oceanball的代码看下：</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828110445_11101.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">代码中有一句尝试new一个Image对象，如果失败了，则把某一个参数+1，而这个参数正是eleven参数中的某一位，也就是说eleven参数中有一位记录了JS运行环境是否支持new Image，我们这种伪造的浏览器环境当然不支持，所以我们得补上。</p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">5.大功告成</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">好了，解了这么多毒，咱们终于可以获取到了eleven参数，当然这只是漫漫长征第一步，后面请求到的结果中，还有更深更辣的毒等着大家：</p><p style="margin-top:0px; margin-bottom:10px; font-family:微软雅黑,&quot;Microsoft YaHei&quot;; color:rgb(51,51,51); font-size:16px"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/20170828110453_62131.png" alt="" style="border:0px; height:auto; max-width:100%; vertical-align:middle; display:block"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px"><span style="font-family:微软雅黑,&quot;Microsoft YaHei&quot;!important; font-weight:700">二、反爬中可以借鉴的地方</span></p><p style="margin-top:0px; margin-bottom:10px; color:rgb(51,51,51); font-size:16px">首先非常感谢携程反爬工程师给了一个教科书般的JS反爬案例，从这个例子我们也可以看出反爬中使用JS代码加密混淆的威力，基本上如果不是JS熟手，或者不熟悉解题思路的话，就是束手无策。JS混淆的方案有很多，大家可以到网上搜一搜，这里还是很推荐携程这种ajax配合回调+js二次混淆的方案，可以说极大提升了反反爬难度的同时也做到了基本不影响性能。但是这个方案依然对于直接渲染JS页面效果一般，还是建议配合之前文章提到的css:content的方案，这样处理之后那对于反反爬工程师的酸爽绝对够得上100桶统一老坛。</p><br> </div> <div class="readall_box">  <div class="read_more_mask"></div>  <div class="read_more_btn">阅读全文</div>                                             <div class="blog_handle">        <span id="digg" style="cursor:pointer"><i class="iconfont"></i><em>0</em></span>        <span id="bury" style="cursor:pointer"><i class="iconfont"></i><em>0</em></span>           </div>	
+				<ul class="list-group">	
+					   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590261">携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/10562663">eleven</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/1719055">7Eleven的叉烧包</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/8319988">搜索引擎使用中的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9285759">Linux内核中的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11506553">C语言中的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9828198">PHP网站渗透中的奇技淫巧：检查相等时的漏洞</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11162790">Java在进行网络传输的过程中的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/6091759">关于php的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/6926555">Android Studio的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/7692498">C++的一个奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/8919424">数据库备份的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9190434">AndroidStudio的那些奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9325170">git命令的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9327010">Git的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9815769">linux渗透的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/9846804">C/C++的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/10521851">C语言的奇技淫巧</a></li>
+	     		  
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590256">我（程序员？）</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590257">ubuntu17.04中锐捷客户端登录问题</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590258">541. Reverse String II</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590259">java之IO流-字节流</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590260">EventBus3.0的简单实用</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590261">携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590262">JavaScript表单验证</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590263">UML四大关系篇</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590264">struts2+hibernate4的log4j配置（下次使用）</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590265">Mac-ios下JDK的安装路径(java)</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590266">imx6ul+获取rtc时间</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590267">Leetcode算法学习日志-525 Contiguous Array</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590268">运动目标识别系统Matlab仿真——附上程序</a></li>
+	  	   <li class="list-group-item "><a href="https://www.csdndocs.com/article/11590269">手把手入门神经网络系列(1)_从初等数学的角度初探神经网络</a></li>
+	     
+	  </ul>
+		</div>
+</div>
+<div class="col-md-3 ">
+<div class="list-group blogblock">
+<div class="media list-group-item">
+ <a href="https://www.csdndocs.com/blog/643904" class="media-left col-xs-4"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/6360.jpg" alt="西门子软件质量规范" class="img-circle"></a>
+    		<a href="https://www.csdndocs.com/blog/643904" class="media-body"><strong>西门子软件质量规范</strong></a>
+</div>
+<div class="list-group-item clearfix"><span class="col-xs-4">原创</span><span class="col-xs-4">粉丝</span><span class="col-xs-4">点击</span></div>
+</div>
+		<div class="list-group index-blogs">
+<strong class="list-group-item active">热门IT博客</strong>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477530" class="media-left col-xs-4"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/2634.jpg" alt="超级英雄数据下载失败" class="img-circle"></a><a href="https://www.csdndocs.com/blog/477530" class="media-body"><strong>超级英雄数据下载失败</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477531" class="media-left col-xs-4"><img src="./携程反爬中的Eleven参数-反爬与反反爬的奇技淫巧-西门子软件质量规范-程序博客网_files/2635.jpg" alt="淘宝中推广方法有哪些" class="img-circle"></a><a href="https://www.csdndocs.com/blog/477531" class="media-body"><strong>淘宝中推广方法有哪些</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477532" class="media-body"><strong>ae2015cc破解补丁mac</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477533" class="media-body"><strong>新媒体排版软件</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477534" class="media-body"><strong>配置交换机端口类型</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477535" class="media-body"><strong>果壳app没数据</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477536" class="media-body"><strong>运营数据分析主管</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477537" class="media-body"><strong>idc机房域名管理系统</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477538" class="media-body"><strong>mac 删除键</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477539" class="media-body"><strong>淘宝买的源码有后门</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477540" class="media-body"><strong>eminem光明会 知乎</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477541" class="media-body"><strong>大数据架构师要求</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477542" class="media-body"><strong>java程序异常处理</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477543" class="media-body"><strong>好听的英文歌 知乎</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477544" class="media-body"><strong>蛋白质晶体结构数据库</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477545" class="media-body"><strong>神雕侠侣06版源码</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477546" class="media-body"><strong>我叫mt源码</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477547" class="media-body"><strong>德怀特 霍华德数据</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477548" class="media-body"><strong>python netsnmp安装</strong></a>
+</div>
+<div class="media list-group-item">
+<a href="https://www.csdndocs.com/blog/477549" class="media-body"><strong>最新全国省市区数据库</strong></a>
+</div>
+</div>		<div class="list-group">
+<strong class="list-group-item active">热门问题</strong>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438651/1">ubuntu搭建</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438650/1">ubuntu搭建lamp</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438649/1">流子酱</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438648/1">CSDN下载账号</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438647/1">ai换脸程潇</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438646/1">程潇</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438645/1">https://www.csdndocs.com/focus/show/2428735/1</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438644/1">联通光猫超级密码破解</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438643/1">googlehosts</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/2438642/1">杨幂ai换脸</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500214/1">脱缰鸣銮popo</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500215/1">白金銮</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500216/1">东山金銮湾</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500217/1">脱缰鸣銮txt书包</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500218/1">銮字广东话怎么读</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500219/1">銮字取名好吗</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500220/1">佛山合景天銮</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500221/1">鑾</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500222/1">下陈州豫剧打銮驾</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500223/1">和靖</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500224/1">和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500225/1">和面方法</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500226/1">馅饼和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500227/1">和面机</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500228/1">饺子皮和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500229/1">和面的方法</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500230/1">和面读音</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500231/1">拉面和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500232/1">怎么和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500233/1">烙饼和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500234/1">从和面开始</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500235/1">手抓饼和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500236/1">包饺子和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500237/1">和面拼音</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500238/1">包子和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500239/1">梦见和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500240/1">家用和面机</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500241/1">饺子和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500242/1">如何和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500243/1">和面怎么和</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500244/1">和面的拼音</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500245/1">和面技巧</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500246/1">面条和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500247/1">和面怎么读</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500248/1">和面的读音</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500249/1">怎么样和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500250/1">怎样和面</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500251/1">和面的步骤</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500252/1">美食和面开始糖醋虾仁</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500253/1">鸡蛋灌饼和面做法</a>
+    <a class="list-group-item" href="https://www.csdndocs.com/focus/show/500254/1">饺子皮怎么和面</a>
+</div></div>
+	</div>
+</div>
+<div id="footer" class="footer hidden-print  bg-primary">
+<div class="container">
+<div class="hide"></div>
+<p>程序博客网，程序员的互联网技术博客家园。csdn论坛精品 msdn技术资料都在这里</p>
+			</div>
+</div>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+</body></html>
