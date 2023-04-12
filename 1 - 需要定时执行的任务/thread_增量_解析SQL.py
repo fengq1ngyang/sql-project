@@ -149,10 +149,15 @@ if __name__ == '__main__':
     t.start()
 
     # 开启解析的进程
+    p_array = []
     for idx in range(8):
         p = Process(target=sql_parse, args=(row_Mqueue, result_Tqueue))
+        p_array.append(p)
         p.start()
 
+    t.join()
+    for process in p_array:
+        process.join()
 
 
     # while True:
