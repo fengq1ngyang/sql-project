@@ -3,11 +3,9 @@ import re
 import time
 import requests
 import DBUtil
-from tqdm import tqdm
-
 
 COOKIES = {
-    'JSESSIONID': '3B715E487B61070B15A654004CB8C8DC',
+    'JSESSIONID': '4FA714A3A1EA4A0691911920C495918D',
     '__jsluid_s': '2b7f97d559b4fe6316508de6939bfb9d',
 }
 HEADER = {
@@ -31,13 +29,14 @@ DATA_ARRAY = []
 ALREADY_EXISTS = []
 NOT_EXISTS_PAGE = 0
 
+
 def download_page(pageNumber):
     global COOKIES
     global HEADER
     global ALREADY_EXISTS
 
     data = {
-        "flag": "2",
+        "flag": "3",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
@@ -74,7 +73,6 @@ def to_baId(baId):
     global DATA_ARRAY
     global HEADER
 
-
     data = {
         'baId': baId
     }
@@ -85,7 +83,10 @@ def to_baId(baId):
     text = response.json()
 
     obj = text['data']
-    DATA_ARRAY.append([value for key, value in obj.items()])
+    if len(obj.items()) == 20:
+        DATA_ARRAY.append([value for key, value in obj.items()])
+    else:
+        print(obj)
     if len(DATA_ARRAY) >= 100:
         insert_DB()
 
@@ -95,7 +96,7 @@ def insert_DB():
     global DATA_ARRAY
 
     insert_sql = """
-        INSERT INTO u_hq.tzxm_detail_selectba_2 (
+        INSERT INTO u_hq.tzxm_detail_selectba_3 (
         overDate,
         note,
         addTime,
@@ -130,12 +131,11 @@ def get_DB_exists():
     global ALREADY_EXISTS
 
     select_sql = """
-        select id from u_hq.tzxm_detail_selectba_2
+        select id from u_hq.tzxm_detail_selectba_3;   
     """
     pg = DBUtil.PgUtil()
     data = pg.get_data(select_sql)
     ALREADY_EXISTS = list(map(lambda x: x[0], data))
-
 
 
 def get_page():
@@ -143,7 +143,7 @@ def get_page():
     global ALREADY_EXISTS
 
     data = {
-        "flag": "2",
+        "flag": "3",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
@@ -154,7 +154,6 @@ def get_page():
     response = requests.post(url=base_url, headers=HEADER, cookies=COOKIES, data=data)
 
     NOT_EXISTS_PAGE = int(response.json()['data']['totalPage']) + 1
-
     # 通过计算的总数，获取新增数量页数
     # NOT_EXISTS_PAGE = (int(response.json()['data']['totalRow']) - len(ALREADY_EXISTS)) // 15+2
 
@@ -166,7 +165,6 @@ if __name__ == '__main__':
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in tqdm(range(1,NOT_EXISTS_PAGE)):
+    for page in range(1, NOT_EXISTS_PAGE):
         download_page(page)
-        time.sleep(1)
     insert_DB()

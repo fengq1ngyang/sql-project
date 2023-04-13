@@ -3,7 +3,7 @@ import re
 import time
 import requests
 import DBUtil
-from tqdm import tqdm
+# from tqdm import tqdm
 
 
 COOKIES = {
@@ -167,6 +167,6 @@ if __name__ == '__main__':
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in tqdm(range(1,NOT_EXISTS_PAGE)):
+    for page in range(1,NOT_EXISTS_PAGE):
         download_page(page)
     insert_DB()

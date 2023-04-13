@@ -11,13 +11,8 @@ from concurrent.futures import ThreadPoolExecutor
 import multiprocessing
 import atexit
 
-# 注册全局线程池
-pool = ThreadPoolExecutor()
 DATA_ARRAY = []
-lock = Lock()
-
 pg_util = DBUtil.PgUtil()
-
 insert_sql = f"INSERT INTO u_hq.sql_parse (source_table, source_model, target_table, target_model, function_name,work_step, sql_code, sql_row_number, work_id,error_msg,execution_time) " \
              f"values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
@@ -102,10 +97,9 @@ def sql_parse(row_Mqueue:Queue,result_Tqueue:Queue):
 
 """写入数据库"""
 def insert_table():
-    with lock:
-        global DATA_ARRAY
-        pg_util.insert_table(insert_sql, DATA_ARRAY)
-        DATA_ARRAY[:] = []
+    global DATA_ARRAY
+    pg_util.insert_table(insert_sql, DATA_ARRAY)
+    DATA_ARRAY[:] = []
 
 """清空表"""
 def tun_table():
@@ -120,21 +114,9 @@ def tun_table():
     pgSQL连接写入数据库 (IO密集型任务) 多线程 用线程池,在多线程里面用线程池submit提交任务
 """
 
-def exit_handler():
-    # 终止所有线程
-    for thread in threading.enumerate():
-        if thread is not threading.current_thread():
-            thread.join()
-
-    # 终止所有进程
-    for process in multiprocessing.active_children():
-        process.terminate()
 
 
 if __name__ == '__main__':
-
-    # 此处为需要执行的动作
-    atexit.register(exit_handler)
 
     # 设置日志级别为
     logging.basicConfig(level=logging.INFO)
@@ -147,6 +129,7 @@ if __name__ == '__main__':
     # 开启读取数据库的线程
     t = threading.Thread(target=pg_getData, args=(row_Mqueue,))
     t.start()
+    t.join()
 
     # 开启解析的进程
     p_array = []
@@ -155,7 +138,6 @@ if __name__ == '__main__':
         p_array.append(p)
         p.start()
 
-    t.join()
     for process in p_array:
         process.join()
 

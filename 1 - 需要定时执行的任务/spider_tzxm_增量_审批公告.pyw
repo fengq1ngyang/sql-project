@@ -5,7 +5,6 @@ import requests
 import DBUtil
 from tqdm import tqdm
 
-
 COOKIES = {
     'JSESSIONID': '3B715E487B61070B15A654004CB8C8DC',
     '__jsluid_s': '2b7f97d559b4fe6316508de6939bfb9d',
@@ -31,13 +30,14 @@ DATA_ARRAY = []
 ALREADY_EXISTS = []
 NOT_EXISTS_PAGE = 0
 
+
 def download_page(pageNumber):
     global COOKIES
     global HEADER
     global ALREADY_EXISTS
 
     data = {
-        "flag": "10",
+        "flag": "7",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
@@ -45,7 +45,7 @@ def download_page(pageNumber):
     }
     data = json.dumps(data)
 
-    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectHzByPage'
+    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageSP'
 
     response = requests.post(url=base_url, headers=HEADER, cookies=COOKIES, data=data)
     if response.status_code < 400:
@@ -60,8 +60,8 @@ def download_page(pageNumber):
             if item['id'] in ALREADY_EXISTS:
                 pass
             else:
-                print(item['id'],len(ALREADY_EXISTS))
-                to_baId(item['id'])
+                time.sleep(0.1)
+                to_baId(item['id'], item['pid'])
     else:
         time.sleep(5)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!请求出错 url:", response.url)
@@ -69,20 +69,26 @@ def download_page(pageNumber):
 
 
 # 获取详情
-def to_baId(id):
+def to_baId(id, pid):
     global COOKIES
     global DATA_ARRAY
     global HEADER
 
-
     data = {
-        'id': id
+        'id': id,
+        'pid': pid
     }
     data = json.dumps(data)
-    response = requests.post('https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/getHzggInfoById',headers=HEADER, cookies=COOKIES, data=data)
+
+    response = requests.post('https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/getSpggInfoById',
+                             headers=HEADER, cookies=COOKIES, data=data)
     text = response.json()
+
     obj = text['data']
-    DATA_ARRAY.append([value for key, value in obj.items()])
+    if len(obj.items()) == 14:
+        DATA_ARRAY.append([id,pid] + [value for key, value in obj.items()])
+    else:
+        print(obj)
     if len(DATA_ARRAY) >= 100:
         insert_DB()
 
@@ -92,10 +98,10 @@ def insert_DB():
     global DATA_ARRAY
 
     insert_sql = """
-        INSERT INTO u_hq.tzxm_detail_selecthz (
-            proofCode, addTime, handleDeptName, updateTime, pId, sort, title, content, openType, expiryDate, hasStart, copies, stateName, fileNo, finishDateString, finishDate, id, projectName, isValidity
+        INSERT INTO u_hq.tzxm_detail_selectsp (
+            project_id,project_pid,proofCode, handleDeptName, sort, type, title, content, openType, copies, stateName, fileNo, finishDateString, finishDate, projectName, isValidity
         ) VALUES (
-            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+            %s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
         )
     """
     pg = DBUtil.PgUtil()
@@ -109,7 +115,7 @@ def get_DB_exists():
     global ALREADY_EXISTS
 
     select_sql = """
-        select pid from u_hq.tzxm_detail_selecthz
+        select project_id from u_hq.tzxm_detail_selectsp
     """
     pg = DBUtil.PgUtil()
     data = pg.get_data(select_sql)
@@ -121,14 +127,14 @@ def get_page():
     global ALREADY_EXISTS
 
     data = {
-        "flag": "10",
+        "flag": "7",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
         "pageNumber": 1
     }
     data = json.dumps(data)
-    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectHzByPage'
+    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageSP'
     response = requests.post(url=base_url, headers=HEADER, cookies=COOKIES, data=data)
     NOT_EXISTS_PAGE = int(response.json()['data']['totalPage']) + 1
 
@@ -139,7 +145,6 @@ if __name__ == '__main__':
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in tqdm(range(1,NOT_EXISTS_PAGE)):
+    for page in range(1, NOT_EXISTS_PAGE):
         download_page(page)
-        time.sleep(1)
     insert_DB()

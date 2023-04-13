@@ -5,6 +5,7 @@ import requests
 import DBUtil
 from tqdm import tqdm
 
+
 COOKIES = {
     'JSESSIONID': '3B715E487B61070B15A654004CB8C8DC',
     '__jsluid_s': '2b7f97d559b4fe6316508de6939bfb9d',
@@ -30,14 +31,13 @@ DATA_ARRAY = []
 ALREADY_EXISTS = []
 NOT_EXISTS_PAGE = 0
 
-
 def download_page(pageNumber):
     global COOKIES
     global HEADER
     global ALREADY_EXISTS
 
     data = {
-        "flag": "7",
+        "flag": "2",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
@@ -45,7 +45,7 @@ def download_page(pageNumber):
     }
     data = json.dumps(data)
 
-    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageSP'
+    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageBA'
 
     response = requests.post(url=base_url, headers=HEADER, cookies=COOKIES, data=data)
     if response.status_code < 400:
@@ -57,11 +57,11 @@ def download_page(pageNumber):
         text = response.json()
         list = text['data']['list']
         for item in list:
-            if item['id'] in ALREADY_EXISTS:
+            if item['baId'] in ALREADY_EXISTS:
                 pass
             else:
                 time.sleep(0.1)
-                to_baId(item['id'], item['pid'])
+                to_baId(item['baId'])
     else:
         time.sleep(5)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!请求出错 url:", response.url)
@@ -69,26 +69,23 @@ def download_page(pageNumber):
 
 
 # 获取详情
-def to_baId(id, pid):
+def to_baId(baId):
     global COOKIES
     global DATA_ARRAY
     global HEADER
 
+
     data = {
-        'id': id,
-        'pid': pid
+        'baId': baId
     }
     data = json.dumps(data)
 
-    response = requests.post('https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/getSpggInfoById',
+    response = requests.post('https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectBaProjectInfo',
                              headers=HEADER, cookies=COOKIES, data=data)
     text = response.json()
 
     obj = text['data']
-    if len(obj.items()) == 14:
-        DATA_ARRAY.append([id,pid] + [value for key, value in obj.items()])
-    else:
-        print(obj)
+    DATA_ARRAY.append([value for key, value in obj.items()])
     if len(DATA_ARRAY) >= 100:
         insert_DB()
 
@@ -98,14 +95,32 @@ def insert_DB():
     global DATA_ARRAY
 
     insert_sql = """
-        INSERT INTO u_hq.tzxm_detail_selectsp (
-            project_id,project_pid,proofCode, handleDeptName, sort, type, title, content, openType, copies, stateName, fileNo, finishDateString, finishDate, projectName, isValidity
-        ) VALUES (
-            %s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-        )
+        INSERT INTO u_hq.tzxm_detail_selectba_2 (
+        overDate,
+        note,
+        addTime,
+        proofOrSerialCode,
+        submitDate,
+        fullName,
+        updateTime,
+        expiryDate,
+        applyOrgan,
+        beginDate,
+        hasStart,
+        sfjz,
+        scope,
+        finishDate,
+        id,
+        place,
+        stateFlagName,
+        projectName,
+        totalInvest,
+        isValidity
+    ) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);
     """
     pg = DBUtil.PgUtil()
     pg.insert_table(insert_sql, DATA_ARRAY)
+    print("#########################  成功插入：{} 条".format(len(DATA_ARRAY)))
     # 插入成功将 DATA_ARRAY 清空
     DATA_ARRAY[:] = []
 
@@ -115,11 +130,12 @@ def get_DB_exists():
     global ALREADY_EXISTS
 
     select_sql = """
-        select project_id from u_hq.tzxm_detail_selectsp
+        select id from u_hq.tzxm_detail_selectba_2
     """
     pg = DBUtil.PgUtil()
     data = pg.get_data(select_sql)
     ALREADY_EXISTS = list(map(lambda x: x[0], data))
+
 
 
 def get_page():
@@ -127,26 +143,29 @@ def get_page():
     global ALREADY_EXISTS
 
     data = {
-        "flag": "7",
+        "flag": "2",
         "nameOrCode": "",
         "pageSize": 15,
         "city": "",
         "pageNumber": 1
     }
     data = json.dumps(data)
-    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageSP'
+    base_url = 'https://gd.tzxm.gov.cn/tzxmspweb/api/publicityInformation/selectByPageBA'
     response = requests.post(url=base_url, headers=HEADER, cookies=COOKIES, data=data)
+
     NOT_EXISTS_PAGE = int(response.json()['data']['totalPage']) + 1
+
+    # 通过计算的总数，获取新增数量页数
+    # NOT_EXISTS_PAGE = (int(response.json()['data']['totalRow']) - len(ALREADY_EXISTS)) // 15+2
 
 
 if __name__ == '__main__':
+
     # 1.获取数据库数据
     get_DB_exists()
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in tqdm(range(1, NOT_EXISTS_PAGE)):
+    for page in range(1,NOT_EXISTS_PAGE):
         download_page(page)
-        time.sleep(1)
-
     insert_DB()
