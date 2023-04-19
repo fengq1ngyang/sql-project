@@ -13,7 +13,7 @@ import atexit
 
 DATA_ARRAY = []
 pg_util = DBUtil.PgUtil()
-insert_sql = f"INSERT INTO u_hq.sql_parse (source_table, source_model, target_table, target_model, function_name,work_step, sql_code, sql_row_number, work_id,error_msg,execution_time) " \
+insert_sql = f"INSERT INTO dw.dwd_procedure_log_parse (source_table, source_model, target_table, target_model, function_name,work_step, sql_code, sql_row_number, work_id,error_msg,execution_time) " \
              f"values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
 
 sql_code = """
@@ -103,7 +103,7 @@ def insert_table():
 
 """清空表"""
 def tun_table():
-    pg_util.truncate_table('u_hq.sql_parse')
+    pg_util.truncate_table('dw.dwd_procedure_log_parse')
     logging.info("******************* 清空原数据完成 ******************")
 
 

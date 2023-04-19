@@ -32,15 +32,18 @@ headers = {
 # print(requests.get("http://127.0.0.1:8000/count/").json())
 
 proxy = {
-    'https': 'http://47.113.147.115:7888'
+    'https': 'http://127.0.0.1:7890',
+    'http': 'http://127.0.0.1:7890'
 }
 
 
-response = requests.post(url=base_url, data=request_body, proxies=proxy,
-                         headers=headers, verify=False)
-print(response.request)
-body = response.text
-print(body)
 
-from urllib.request import getproxies
-print(getproxies())
+for _ in range(0,100):
+    response = requests.post(url=base_url, data=request_body, proxies=proxy,headers=headers, verify=False)
+    print(response.request)
+    body = response.text
+    print(body)
+
+    from urllib.request import getproxies
+    # 查看代理配置 {'http': 'http://127.0.0.1:7890', 'https': 'https://127.0.0.1:7890', 'ftp': 'ftp://127.0.0.1:7890'}
+    print(getproxies())

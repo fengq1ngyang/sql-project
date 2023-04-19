@@ -49,7 +49,10 @@ proxy_all = {
 }
 
 
-insert_sql_10 = """insert into u_hq.zrzy_sert_gcgh_bf(收件编号,证书编号,项目名称,单体名称,"建设单位(个人)",核发日期,建设位置,建设规模,附图及附件名称,sert_id,建筑面积,用地面积,计容面积,不计容面积,基底面积,地上建筑面积,地下建筑面积,建筑高度,地下层数,地上层数) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+insert_sql_10 = """
+    INSERT INTO ods.zrzy_sert_gcgh (sert_id, 收件编号, 证书编号, 项目名称, 单体名称, "建设单位(个人)", 核发日期, 建设位置, 建设规模, 附图及附件名称, 建筑面积, 用地面积, 计容面积, 不计容面积, 基底面积, 地上建筑面积, 地下建筑面积, 建筑高度, 地下层数, 地上层数, 管线长, 管径)
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
+"""
 
 # 完成翻页，生成所有详情页url
 def do_craw_url(detail_url: Queue, page_queue: Queue):
@@ -114,7 +117,7 @@ def do_parser(detail_url: Queue, DB_url_list, lst10):
 def select_url_list():
     sql_code = f"""
         select concat('https://zsxx.fszrzy.foshan.gov.cn/GTGHService/ViewCase/gcghxkz/',sert_id)
-        from u_hq.zrzy_sert_gcgh_bf
+        from ods.zrzy_sert_gcgh 
         where "证书编号" like '%{request_body['strWhere']}%'
     """
     data = pgUtil.get_data(sql_code)
@@ -137,58 +140,91 @@ def get_pageNum():
 
 # 切分建筑规模
 def split_jzgm(str):
-    # 解析后的字典对象
+
     row = {}
 
     str = str.replace("：", ":").replace("，", ",").replace(" ", "").replace("；", ";").replace(";", ',').replace('（',',').replace('）', ',').split('。')[0].split(",")
 
     pattern = r'(\S+):([\S+\.㎡层平方米]+)'
 
+    # 新的字典确保顺序，以及完整性
+    new_row = {'建筑面积': None, '用地面积': None, '计容面积': None, '不计容面积': None, '基底面积': None,
+               '地上建筑面积': None,
+               '地下建筑面积': None, '建筑高度': None, '地下层数': None, '地上层数': None,
+               '管线长': None, '管径': None}
+
+    # 判断是否为纯数字
+
+
     # Find all matches in the string
     for s in str:
-        matches = re.findall(pattern, s)
-        for key, value in matches:
-            # 如果是长度超过6 而且存在顿号就默认为 value是这种类型 建筑层数：地上1层、30层、32层、地下2层
-            if (len(value) > 6 and "、" in value) or "、" in value:
-                row[key] = value
+        is_num = False
+        num = ''
+        try:
+            num = float(s)
+            is_num = True
+        except ValueError:
+            pass
 
-            elif re.match(r"地(\S{,4})层", value):
-                try:
-                    match = re.match(r"地(\S{,4})层", value)
-                    row[key] = int(cn2an.cn2an(match.group(1)[1:], "smart"))
-                except:
-                    print(str)
-            else:
-                if "." in value:
-                    match = re.search(r"(\d+\.\d+)(\D+)", value)
-                else:
-                    match = re.search(r"(\d+)(\D+)", value)
-                if match:
+        # 判断是否为 管线长:xxxx;管径为xxx类型数据
+        if '管线' in s :
+            re_ = r"(\d+)(\.\d+)?"
+            reso_arr = re.findall(re_,s)
+            for item in reso_arr:
+                new_row['管线长'] = ''.join(list(item))
+        elif '管径' in s:
+            s = s.replace(":",'')
+            re_date = re.findall(r"([\u4e00-\u9fa5])", s)
+            for key in re_date:
+                s = s.replace(key, '')
+            new_row['管径'] = s
+            pass
+        # 判断是否包含数字
+        elif is_num:
+            new_row['建筑面积'] = num
+        else:
+            matches = re.findall(pattern, s)
+            for key, value in matches:
+                # 如果是长度超过6 而且存在顿号就默认为 value是这种类型 建筑层数：地上1层、30层、32层、地下2层
+                if (len(value) > 6 and "、" in value) or "、" in value:
+                    row[key] = value
+
+                elif re.match(r"地(\S{,4})层", value):
                     try:
-                        num = int(match.group(1))
+                        match = re.match(r"地(\S{,4})层", value)
+                        row[key] = int(cn2an.cn2an(match.group(1)[1:], "smart"))
                     except:
-                        num = float(match.group(1))
-                    if num <= 0:
+                        # print(str)
                         pass
-                    else:
-                        row[key] = match.group(1)
                 else:
-                    if value[0].isdigit():
+                    if "." in value:
+                        match = re.search(r"(\d+\.\d+)(\D+)", value)
+                    else:
+                        match = re.search(r"(\d+)(\D+)", value)
+                    if match:
                         try:
-                            num = int(value)
+                            num = int(match.group(1))
                         except:
-                            num = float(value)
+                            num = float(match.group(1))
                         if num <= 0:
                             pass
                         else:
-                            row[key] = value
-    # 新的字典确保顺序，以及完整性
-    new_row = {'建筑面积': None, '用地面积': None, '计容面积': None, '不计容面积': None, '基底面积': None, '地上建筑面积': None,
-               '地下建筑面积': None, '建筑高度': None, '地下层数': None, '地上层数': None}
+                            row[key] = match.group(1)
+                    else:
+                        if value[0].isdigit():
+                            try:
+                                num = int(value)
+                            except:
+                                num = float(value)
+                            if num <= 0:
+                                pass
+                            else:
+                                row[key] = value
+
     for key, value in row.items():
         # 15
         if key in ['总建筑面积', '建筑面积', '其中计容面积', '计容面积', '其中地上建筑面积', '地上建筑面积',
-                   '其中地下室建筑面积', '地下建筑面积', '地下室建筑面积', '建筑层数', '地上', '用地面积', '建筑高度',
+                   '其中地下室建筑面积', '地下建筑面积', '地下室建筑面积', '建筑层数', '地下', '用地面积', '建筑高度',
                    '基底面积', '不计容面积']:
 
             if key == '总建筑面积':
@@ -206,8 +242,8 @@ def split_jzgm(str):
             elif key == '建筑层数':
                 new_row['地上层数'] = value
 
-            elif key == '地上':
-                new_row['地上层数'] = value
+            elif key == '地下':
+                new_row['地下层数'] = value
 
             else:
                 new_row[key] = value
@@ -273,14 +309,4 @@ def main():
 
 
 if __name__ == '__main__':
-
-    while True:
-        time_now = time.strftime("%H", time.localtime())  # 刷新
-        print("Now Time：", time.strftime("%H:%M:%S", time.localtime()))
-        if time_now == "18":  # 此处设置每天定时的时间
-            # 此处为需要执行的动作
-            try:
-                main()
-            except:  # 失败重试（主要是远程数据库网络问题）
-                main()
-        time.sleep(3600)  # 因为以秒定时，使之不会在1小时内执行多次
+    main()

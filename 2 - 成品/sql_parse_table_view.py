@@ -69,7 +69,7 @@ def create_json_by_tableName(direction_key, table_name, table_key):
         where = f"where target_table = '{table_name}' or source_table = '{table_name}'"
 
     sql_code = """
-    select * from u_hq.sql_parse {} 
+    select * from dw.dwd_procedure_log_parse {} 
     """.format(where)
 
     pg_util = PgUtil()

@@ -95,7 +95,7 @@ def insert_DB():
     global DATA_ARRAY
 
     insert_sql = """
-        INSERT INTO u_hq.tzxm_detail_selectba_2 (
+        INSERT INTO ods.tzxm_project_bach (
         overDate,
         note,
         addTime,
@@ -130,7 +130,7 @@ def get_DB_exists():
     global ALREADY_EXISTS
 
     select_sql = """
-        select id from u_hq.tzxm_detail_selectba_2
+        select id from ods.tzxm_project_bach
     """
     pg = DBUtil.PgUtil()
     data = pg.get_data(select_sql)
@@ -166,6 +166,6 @@ if __name__ == '__main__':
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in range(1,NOT_EXISTS_PAGE):
+    for page in range(1,50):
         download_page(page)
     insert_DB()

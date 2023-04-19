@@ -61,7 +61,7 @@ def download_page(pageNumber):
                 pass
             else:
                 time.sleep(0.1)
-                to_baId(item['id'], item['pid'])
+                to_baId(item['id'], 'undefined')
     else:
         time.sleep(5)
         print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!请求出错 url:", response.url)
@@ -98,7 +98,7 @@ def insert_DB():
     global DATA_ARRAY
 
     insert_sql = """
-        INSERT INTO u_hq.tzxm_detail_selectsp (
+        INSERT INTO ods.tzxm_project_spgg (
             project_id,project_pid,proofCode, handleDeptName, sort, type, title, content, openType, copies, stateName, fileNo, finishDateString, finishDate, projectName, isValidity
         ) VALUES (
             %s,%s,%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
@@ -115,7 +115,7 @@ def get_DB_exists():
     global ALREADY_EXISTS
 
     select_sql = """
-        select project_id from u_hq.tzxm_detail_selectsp
+        select project_id from ods.tzxm_project_spgg
     """
     pg = DBUtil.PgUtil()
     data = pg.get_data(select_sql)
@@ -145,6 +145,6 @@ if __name__ == '__main__':
     # 2.获取需要爬取的页数
     get_page()
     # 3.执行for循环获取数据
-    for page in range(1, NOT_EXISTS_PAGE):
+    for page in range(1, 50):
         download_page(page)
     insert_DB()

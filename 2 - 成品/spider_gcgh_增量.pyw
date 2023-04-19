@@ -26,8 +26,30 @@ request_body = {
     "pageIndex": 1,
     "pageSize": 10000,
 }
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'Accept-Language': 'en-US,en;q=0.9',
+    'Cache-Control': 'max-age=0',
+    'Connection': 'keep-alive',
+    'Referer': 'https://zsxx.fszrzy.foshan.gov.cn/GTGHService/Home/ZSSearch/',
+    'Upgrade-Insecure-Requests': '1',
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'Origin': 'https://zsxx.fszrzy.foshan.gov.cn',
+    'Sec-Fetch-Dest': 'document',
+    'Sec-Fetch-Mode': 'navigate',
+    'Sec-Fetch-Site': 'same-origin',
+    'Sec-Fetch-User': '?1',
+    'Pragma': 'no-cache',
+    'Cache-Control': 'no-cache'
+}
+
+
 insert_sql_10 = """insert into ods.zrzy_sert_gcgh(收件编号,证书编号,项目名称,单体名称,"建设单位(个人)",核发日期,建设位置,建设规模,附图及附件名称,sert_id) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
 insert_sql_9 = """insert into ods.zrzy_sert_gcgh(收件编号,证书编号,项目名称,"建设单位(个人)",核发日期,建设位置,建设规模,附图及附件名称,sert_id) values (%s,%s,%s,%s,%s,%s,%s,%s,%s)"""
+
+
 
 """完成翻页，生成所有详情页url"""
 def do_craw_url(detail_url: Queue, page_queue: Queue):
@@ -40,7 +62,7 @@ def do_craw_url(detail_url: Queue, page_queue: Queue):
             break
         request_body['pageIndex'] = pageNum
         # print(f"page={pageNum}")
-        response = requests.post(url=base_url, data=request_body, verify=False)
+        response = requests.post(url=base_url, data=request_body, headers=headers, verify=False)
         body = response.json()
         uuids = json.loads(body['datas'])
         for uuid in uuids:
@@ -63,7 +85,7 @@ def do_parser(detail_url: Queue, DB_url_list, lst9, lst10):
         if url in DB_url_list:
             pass
         else:
-            html = requests.get(url=url, verify=False).text
+            html = requests.get(url=url, data=request_body, headers=headers, verify=False).text
             soup = BeautifulSoup(html, 'html.parser')
             table = soup.find('div', {'id': 'yslz-info'}).find('table')
             fields = []
@@ -77,7 +99,6 @@ def do_parser(detail_url: Queue, DB_url_list, lst9, lst10):
                 lst9.append(fields)
             else:
                 lst10.append(fields)
-
 
 """查询DB_url_list：返回数据库已存在url列表"""
 def select_url_list():
@@ -94,7 +115,7 @@ def select_url_list():
 """获取总页数"""
 def get_pageNum():
     global request_body
-    response = requests.post(url=base_url, data=request_body, verify=False)
+    response = requests.post(url=base_url, data=request_body, headers=headers, verify=False)
     body = response.json()
     page_count = body['pageCount']
     count = body['count']

@@ -50,7 +50,7 @@ class PgUtil:
                 break
             except Exception as exc:
                 print(exc)
-                time.sleep(2)
+                time.sleep(5)
         self.close()
 
     def truncate_table(self, table_name):
